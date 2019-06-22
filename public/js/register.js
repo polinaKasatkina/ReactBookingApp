@@ -61595,9 +61595,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -61616,12 +61616,41 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Register).call(this, props));
     _this.state = {
-      token: document.head.querySelector('meta[name="csrf-token"]').content
+      token: document.head.querySelector('meta[name="csrf-token"]').content,
+      isLoggedIn: false,
+      user: {}
     };
+    _this.submitRegisterForm = _this.submitRegisterForm.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(Register, [{
+    key: "submitRegisterForm",
+    value: function submitRegisterForm(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var form = e.target;
+      var data = new FormData(form);
+      fetch('/register', {
+        method: 'POST',
+        body: data
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        _this2.setState({
+          isLoggedIn: true,
+          user: data
+        });
+
+        localStorage["appState"] = JSON.stringify({
+          isLoggedIn: _this2.state.isLoggedIn,
+          userData: _this2.state.user
+        });
+        window.location.href = '/profile';
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -61631,7 +61660,8 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         method: "POST",
         action: "/register",
-        "aria-label": "Register"
+        "aria-label": "Register",
+        onSubmit: this.submitRegisterForm
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         name: "_token",

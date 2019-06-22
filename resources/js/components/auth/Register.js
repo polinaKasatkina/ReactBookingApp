@@ -7,9 +7,43 @@ export class Register extends Component {
 
         this.state = {
             token: document.head.querySelector('meta[name="csrf-token"]').content,
+            isLoggedIn: false,
+            user: {}
         };
 
+        this.submitRegisterForm = this.submitRegisterForm.bind(this);
 
+    }
+
+    submitRegisterForm(e) {
+
+        e.preventDefault();
+
+        const form = e.target;
+        const data = new FormData(form);
+
+        fetch('/register', {
+            method: 'POST',
+            body: data,
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+
+                this.setState({
+                    isLoggedIn: true,
+                    user: data
+                });
+
+                localStorage["appState"] = JSON.stringify({
+                    isLoggedIn: this.state.isLoggedIn,
+                    userData: this.state.user
+                });
+
+                window.location.href = '/profile';
+
+            });
     }
     
 
@@ -18,7 +52,7 @@ export class Register extends Component {
             <div className="card booking-details-block">
 
                 <div className="card-body">
-                    <form method="POST" action="/register" aria-label="Register">
+                    <form method="POST" action="/register" aria-label="Register" onSubmit={this.submitRegisterForm}>
 
                         <input type="hidden" name="_token" value={this.state.token} />
 

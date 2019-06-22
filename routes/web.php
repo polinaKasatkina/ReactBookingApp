@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::post('/register', 'RegisterController@register');
+
 Route::post('/search', 'SearchController@searchAvailableProperty')->name('search');
 
 

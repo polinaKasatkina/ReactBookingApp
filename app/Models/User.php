@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password', 'title', 'address', 'city', 'region', 'country', 'postcode', 'phone', 'discount', 'company'
+        'first_name', 'last_name', 'email', 'password', 'title', 'address', 'city', 'region', 'country', 'postcode', 'phone', 'discount', 'company', 'auth_token'
     ];
 
     /**
@@ -36,6 +36,20 @@ class User extends Authenticatable
 
     public function isAdmin()    {
         return $this->role_id === self::ADMIN_TYPE;
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 
 }
