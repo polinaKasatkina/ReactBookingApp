@@ -7,6 +7,8 @@ export class Login extends Component {
 
         this.state = {
             token: document.head.querySelector('meta[name="csrf-token"]').content,
+            isLoggedIn: false,
+            user: []
         };
 
         this.loginFormSubmit = this.loginFormSubmit.bind(this);
@@ -15,6 +17,36 @@ export class Login extends Component {
 
     loginFormSubmit(e) {
 
+        e.preventDefault();
+
+        const form = e.target;
+        const data = new FormData(form);
+
+
+        fetch('/login', {
+            method: 'POST',
+            body: data,
+        })
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+
+                console.log(data)
+
+                this.setState({
+                    isLoggedIn: true,
+                    user: data
+                });
+
+                localStorage["appState"] = JSON.stringify({
+                    isLoggedIn: this.state.isLoggedIn,
+                    userData: this.state.user
+                });
+
+                window.location.href = '/profile';
+
+            });
 
     }
 

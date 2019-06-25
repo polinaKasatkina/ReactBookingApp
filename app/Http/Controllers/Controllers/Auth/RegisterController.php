@@ -87,20 +87,7 @@ class RegisterController extends Controller
     protected function register(Request $request)
     {
 
-//        var_dump(env('MAIL_USERNAME')); die;
-
-        /** @var User $user */
-//        $validatedData = $request->validate([
-//            'first_name' => 'required|string|max:255',
-//            'last_name'  => 'required|string|max:255',
-//            'email'      => 'required|string|email|max:255|unique:users',
-//            'password'   => 'required|string|min:6|confirmed',
-//        ]);
         try {
-//            $validatedData['password']        = bcrypt(array_get($validatedData, 'password'));
-////            $validatedData['activation_code'] = str_random(30).time();
-//            $validatedData['discount']        = 1;
-//            $user                             = app(User::class)->create($validatedData);
 
             $user = User::create([
                 'first_name' => $request->first_name,
@@ -113,6 +100,7 @@ class RegisterController extends Controller
             Log::info('[' . date('Y-m-d H:i:s') . '] RegisterController:register:: New user was registered at ' . time());
 
         } catch (\Exception $exception) {
+
             logger()->error($exception);
             Log::error('[' . date('Y-m-d H:i:s') . '] RegisterController:register:: Unable to create new user.');
 
@@ -121,10 +109,9 @@ class RegisterController extends Controller
 
         auth()->login($user);
 
-//        Mail::to($user)->send(new Welcome($user));
+//      Mail::to($user)->send(new Welcome($user));
 
-
-        return response()->json($user); //redirect($this->redirectTo());
+        return response()->json(Auth::user());
     }
 
     /**

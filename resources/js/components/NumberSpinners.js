@@ -12,6 +12,15 @@ export class NumberSpinners extends Component {
 
         // This binding is necessary to make `this` work in the callback
         this.numberSpinnerClick = this.numberSpinnerClick.bind(this);
+        this.inputChange = this.inputChange.bind(this);
+    }
+
+    inputChange(e) {
+
+        this.setState({
+            adultsCount: Number(e.target.value)
+        });
+
     }
 
     numberSpinnerClick(e) {
@@ -58,7 +67,7 @@ export class NumberSpinners extends Component {
 				</span>
                                 <input type="text" className="text-center" min="0" max="32"
                                        name={this.props.name} id={this.props.name}
-                                       value={this.state[`${this.props.name}Count`]}/>
+                                       value={this.state[`${this.props.name}Count`]} onChange={this.inputChange}/>
 				<span className="input-group-btn data-up">
 					<button className="btn btn-uppercourt btn-number" data-dir="up" data-input={this.props.name}
                             onClick={this.numberSpinnerClick}><span

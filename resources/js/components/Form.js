@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { NumberSpinners } from './NumberSpinners';
 import { SearchResults } from './SearchResults';
 import Datetime from "react-datetime";
-import Cookies from 'universal-cookie';
 
 export class Form extends Component {
 

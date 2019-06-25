@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::post('/register', 'RegisterController@register');
+Route::post('/login', 'LoginController@login');
 
 Route::post('/search', 'SearchController@searchAvailableProperty')->name('search');
 
@@ -24,7 +25,7 @@ Route::get('/get_properties', 'SearchController@index');
 Route::post('/get_properties_by_id', 'PropertiesController@getPropertiesById');
 Route::post('/add_to_booking', 'BookingController@addBookingCookie');
 
-Route::get('/user_logged_in', 'SearchController@getUserInfo');
+Route::get('/get_user_data/{id}', 'UserController@getUserData');
 
 Route::get('/booking/place', function() {
     return view('bookings.place');

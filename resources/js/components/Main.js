@@ -33,20 +33,15 @@ export default class Main extends Component {
 
     componentDidMount() {
 
-        //fetch('/user_logged_in', {
-        //    method: 'POST',
-        //    body: data,
-        //})
-        //    .then(response => {
-        //        return response.json();
-        //    })
-        //    .then(data => {
-        //
-        //        this.setState({
-        //            userData: data
-        //        });
-        //
-        //    });
+        let appState = JSON.parse(window.localStorage.getItem('appState'));
+
+        if (appState.isLoggedIn) {
+
+            this.setState({
+                userData: appState.userData
+            });
+
+        }
     }
 
     onFormSubmit(e) {
@@ -148,7 +143,7 @@ export default class Main extends Component {
                 {!this.state.proceedBooking && (
                     <div className="row">
                         <div className="col-lg-8 col-lg-offset-2 booking-availability" style={{marginTop: '35px'}}>
-                            <Form onSubmit={this.onFormSubmit} formData={this.state.formData} onChange={this.handleFormInputsChange} />
+                            <Form onSubmit={this.onFormSubmit} formData={this.state.formData} />
                         </div>
                         {this.state.properties && (
                             <SearchResults properties={this.state.properties} onSubmit={this.placeBooking}

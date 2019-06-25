@@ -61616,7 +61616,9 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Login).call(this, props));
     _this.state = {
-      token: document.head.querySelector('meta[name="csrf-token"]').content
+      token: document.head.querySelector('meta[name="csrf-token"]').content,
+      isLoggedIn: false,
+      user: []
     };
     _this.loginFormSubmit = _this.loginFormSubmit.bind(_assertThisInitialized(_this));
     return _this;
@@ -61624,7 +61626,32 @@ function (_Component) {
 
   _createClass(Login, [{
     key: "loginFormSubmit",
-    value: function loginFormSubmit(e) {}
+    value: function loginFormSubmit(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      var form = e.target;
+      var data = new FormData(form);
+      fetch('/login', {
+        method: 'POST',
+        body: data
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        console.log(data);
+
+        _this2.setState({
+          isLoggedIn: true,
+          user: data
+        });
+
+        localStorage["appState"] = JSON.stringify({
+          isLoggedIn: _this2.state.isLoggedIn,
+          userData: _this2.state.user
+        });
+        window.location.href = '/profile';
+      });
+    }
   }, {
     key: "render",
     value: function render() {
