@@ -2,9 +2,9 @@ require('./bootstrap');
 import React from 'react';
 import { render } from 'react-dom';
 
-import Main from './components/Main';
+import Profile from './components/profile/Profile';
 
 render(
-    <Main />,
+    <Profile />,
     document.getElementById('profile')
 );

@@ -82753,6 +82753,21 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./node_modules/simple-react-validator/dist/simple-react-validator.min.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/simple-react-validator/dist/simple-react-validator.min.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;// Simple React Validator v1.2.0 | Created By Dockwa | MIT License | 2017 - Present
+!function(e,t){ true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! react */ "./node_modules/react/index.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (t),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined}(this,function(n){"use strict";function g(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=[],s=!0,n=!1,a=void 0;try{for(var i,u=e[Symbol.iterator]();!(s=(i=u.next()).done)&&(r.push(i.value),!t||r.length!==t);s=!0);}catch(e){n=!0,a=e}finally{try{s||null==u.return||u.return()}finally{if(n)throw a}}return r}(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance")}()}function a(e){return(a="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function b(t){for(var e=1;e<arguments.length;e++){var r=null!=arguments[e]?arguments[e]:{},s=Object.keys(r);"function"==typeof Object.getOwnPropertySymbols&&(s=s.concat(Object.getOwnPropertySymbols(r).filter(function(e){return Object.getOwnPropertyDescriptor(r,e).enumerable}))),s.forEach(function(e){i(t,e,r[e])})}return t}function s(e,t){for(var r=0;r<t.length;r++){var s=t[r];s.enumerable=s.enumerable||!1,s.configurable=!0,"value"in s&&(s.writable=!0),Object.defineProperty(e,s.key,s)}}function e(e,t,r){return t&&s(e.prototype,t),r&&s(e,r),e}function i(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}var t=function(){function s(){var r=this,e=0<arguments.length&&void 0!==arguments[0]?arguments[0]:{};!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,s),i(this,"showMessageFor",function(e){r.visibleFields.push(e),r.helpers.forceUpdateIfNeeded()}),i(this,"hideMessageFor",function(e){var t=r.visibleFields.indexOf(e);-1<t&&r.visibleFields.splice(t,1),r.helpers.forceUpdateIfNeeded()}),i(this,"helpers",{parent:this,passes:function(e,t,r,s){return s.hasOwnProperty(e)?!(this.isRequired(e,s)||!this.isBlank(t))||!1!==s[e].rule(t,r,this.parent):(console.error("Rule Not Found: There is no rule with the name ".concat(e,".")),!0)},isRequired:function(e,t){return t[e].hasOwnProperty("required")&&t[e].required},isBlank:function(e){return null==e||""===e},normalizeValues:function(e,t){return[this.valueOrEmptyString(e),this.getValidation(t),this.getOptions(t)]},getValidation:function(e){return e===Object(e)&&Object.keys(e).length?Object.keys(e)[0]:e.split(":")[0]},getOptions:function(e){if(e===Object(e)&&Object.values(e).length){var t=Object.values(e)[0];return Array.isArray(t)?t:[t]}return 1<(t=e.split(":")).length?t[1].split(","):[]},valueOrEmptyString:function(e){return null==e?"":e},toSentence:function(e){return e.slice(0,-2).join(", ")+(e.slice(0,-2).length?", ":"")+e.slice(-2).join(2<e.length?", or ":" or ")},testRegex:function(e,t){return null!==e.toString().match(t)},forceUpdateIfNeeded:function(){this.parent.autoForceUpdate&&this.parent.autoForceUpdate.forceUpdate()},message:function(e,t,r,s){r.messages=r.messages||{};var n=r.messages[e]||r.messages.default||this.parent.messages[e]||this.parent.messages.default||s[e].message;return n.replace(":attribute",this.humanizeFieldName(t))},humanizeFieldName:function(e){return e.replace(/([A-Z])/g," $1").replace(/_/g," ").toLowerCase()},element:function(e,t){var r=t.element||this.parent.element;return r(e,t.className)},numeric:function(e){return this.testRegex(e,/^(\d+.?\d*)?$/)},momentInstalled:function(){return!(!window||!window.moment)||(console.warn("Date validators require using momentjs https://momentjs.com and moment objects."),!1)},size:function(e,t){return"string"===t||void 0===t||"array"===t?e.length:"num"===t?parseFloat(e):void 0},sizeText:function(e){return"string"===e||void 0===e?" characters":"array"===e?" elements":""}}),this.fields={},this.visibleFields=[],this.errorMessages={},this.messagesShown=!1,this.rules=b({accepted:{message:"The :attribute must be accepted.",rule:function(e){return!0===e},required:!0},after:{message:"The :attribute must be after :date.",rule:function(e,t){return r.helpers.momentInstalled()&&moment.isMoment(e)&&e.isAfter(t[0],"day")},messageReplace:function(e,t){return e.replace(":date",t[0].format("MM/DD/YYYY"))}},after_or_equal:{message:"The :attribute must be after or on :date.",rule:function(e,t){return r.helpers.momentInstalled()&&moment.isMoment(e)&&e.isSameOrAfter(t[0],"day")},messageReplace:function(e,t){return e.replace(":date",t[0].format("MM/DD/YYYY"))}},alpha:{message:"The :attribute may only contain letters.",rule:function(e){return r.helpers.testRegex(e,/^[A-Z]*$/i)}},alpha_space:{message:"The :attribute may only contain letters and spaces.",rule:function(e){return r.helpers.testRegex(e,/^[A-Z\s]*$/i)}},alpha_num:{message:"The :attribute may only contain letters and numbers.",rule:function(e){return r.helpers.testRegex(e,/^[A-Z0-9]*$/i)}},alpha_num_space:{message:"The :attribute may only contain letters, numbers, and spaces.",rule:function(e){return r.helpers.testRegex(e,/^[A-Z0-9\s]*$/i)}},alpha_num_dash:{message:"The :attribute may only contain letters, numbers, and dashes.",rule:function(e){return r.helpers.testRegex(e,/^[A-Z0-9_-]*$/i)}},alpha_num_dash_space:{message:"The :attribute may only contain letters, numbers, dashes, and spaces.",rule:function(e){return r.helpers.testRegex(e,/^[A-Z0-9_-\s]*$/i)}},array:{message:"The :attribute must be an array.",rule:function(e){return Array.isArray(e)}},before:{message:"The :attribute must be before :date.",rule:function(e,t){return r.helpers.momentInstalled()&&moment.isMoment(e)&&e.isBefore(t[0],"day")},messageReplace:function(e,t){return e.replace(":date",t[0].format("MM/DD/YYYY"))}},before_or_equal:{message:"The :attribute must be before or on :date.",rule:function(e,t){return r.helpers.momentInstalled()&&moment.isMoment(e)&&e.isSameOrBefore(t[0],"day")},messageReplace:function(e,t){return e.replace(":date",t[0].format("MM/DD/YYYY"))}},between:{message:"The :attribute must be between :min and :max:type.",rule:function(e,t){return r.helpers.size(e,t[2])>=parseFloat(t[0])&&r.helpers.size(e,t[2])<=parseFloat(t[1])},messageReplace:function(e,t){return e.replace(":min",t[0]).replace(":max",t[1]).replace(":type",r.helpers.sizeText(t[2]))}},boolean:{message:"The :attribute must be a boolean.",rule:function(e){return!1===e||!0===e}},card_exp:{message:"The :attribute must be a valid expiration date.",rule:function(e){return r.helpers.testRegex(e,/^(([0]?[1-9]{1})|([1]{1}[0-2]{1}))\s?\/\s?(\d{2}|\d{4})$/)}},card_num:{message:"The :attribute must be a valid credit card number.",rule:function(e){return r.helpers.testRegex(e,/^\d{4}\s?\d{4,6}\s?\d{4,5}\s?\d{0,8}$/)}},currency:{message:"The :attribute must be a valid currency.",rule:function(e){return r.helpers.testRegex(e,/^\$?(\d{1,3})(\,?\d{3})*\.?\d{0,2}$/)}},date:{message:"The :attribute must be a date.",rule:function(e){return r.helpers.momentInstalled()&&moment.isMoment(e)}},date_equals:{message:"The :attribute must be on :date.",rule:function(e,t){return r.helpers.momentInstalled()&&moment.isMoment(e)&&e.isSame(t[0],"day")},messageReplace:function(e,t){return e.replace(":date",t[0].format("MM/DD/YYYY"))}},email:{message:"The :attribute must be a valid email address.",rule:function(e){return r.helpers.testRegex(e,/^[A-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)}},in:{message:"The selected :attribute must be :values.",rule:function(e,t){return-1<t.indexOf(e)},messageReplace:function(e,t){return e.replace(":values",r.helpers.toSentence(t))}},integer:{message:"The :attribute must be an integer.",rule:function(e){return r.helpers.testRegex(e,/^\d*$/)}},max:{message:"The :attribute may not be greater than :max:type.",rule:function(e,t){return r.helpers.size(e,t[1])<=parseFloat(t[0])},messageReplace:function(e,t){return e.replace(":max",t[0]).replace(":type",r.helpers.sizeText(t[1]))}},min:{message:"The :attribute must be at least :min:type.",rule:function(e,t){return r.helpers.size(e,t[1])>=parseFloat(t[0])},messageReplace:function(e,t){return e.replace(":min",t[0]).replace(":type",r.helpers.sizeText(t[1]))}},not_in:{message:"The selected :attribute must not be :values.",rule:function(e,t){return-1===t.indexOf(e)},messageReplace:function(e,t){return e.replace(":values",r.helpers.toSentence(t))}},not_regex:{message:"The :attribute must not match the required pattern.",rule:function(e,t){return!r.helpers.testRegex(e,"string"==typeof t[0]||t[0]instanceof String?new RegExp(t[0]):t[0])}},numeric:{message:"The :attribute must be a number.",rule:function(e){return r.helpers.numeric(e)}},phone:{message:"The :attribute must be a valid phone number.",rule:function(e){return r.helpers.testRegex(e,/^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/)}},regex:{message:"The :attribute must match the required pattern.",rule:function(e,t){return r.helpers.testRegex(e,"string"==typeof t[0]||t[0]instanceof String?new RegExp(t[0]):t[0])}},required:{message:"The :attribute field is required.",rule:function(e){return!r.helpers.isBlank(e)},required:!0},size:{message:"The :attribute must be :size:type.",rule:function(e,t){return r.helpers.size(e,t[1])==parseFloat(t[0])},messageReplace:function(e,t){return e.replace(":size",t[0]).replace(":type",r.helpers.sizeText(t[1]))}},string:{message:"The :attribute must be a string.",rule:function(e){return a(e)===a("string")}},typeof:{message:"The :attribute is not the correct type of :type.",rule:function(e,t){return a(e)===a(t[0])},messageReplace:function(e,t){return e.replace(":type",a(t[0]))}},url:{message:"The :attribute must be a url.",rule:function(e){return r.helpers.testRegex(e,/^(https?|ftp):\/\/(-\.)?([^\s/?\.#-]+\.?)+(\/[^\s]*)?$/i)}}},e.validators||{}),s.locales.hasOwnProperty(e.locale)||console.warn("Locale not found! Make sure it is spelled correctly and the locale file is loaded.");var t=s.locales[e.locale]||{};Object.keys(this.rules).forEach(function(e){r.rules[e].message=t[e]||r.rules[e].message}),this.messages=e.messages||{},this.className=e.className,this.autoForceUpdate=e.autoForceUpdate||!1,!1===e.element?this.element=function(e){return e}:e.hasOwnProperty("element")?this.element=e.element:"object"===("undefined"==typeof navigator?"undefined":a(navigator))&&"ReactNative"===navigator.product?this.element=function(e){return e}:this.element=function(e,t){return n.createElement("div",{className:t||r.className||"srv-validation-message"},e)}}return e(s,null,[{key:"addLocale",value:function(e,t){this.locales[e]=t}}]),e(s,[{key:"getErrorMessages",value:function(){return this.errorMessages}},{key:"showMessages",value:function(){this.messagesShown=!0,this.helpers.forceUpdateIfNeeded()}},{key:"hideMessages",value:function(){this.messagesShown=!1,this.helpers.forceUpdateIfNeeded()}},{key:"allValid",value:function(){for(var e in this.fields)if(!1===this.fieldValid(e))return!1;return!0}},{key:"fieldValid",value:function(e){return this.fields.hasOwnProperty(e)&&!0===this.fields[e]}},{key:"purgeFields",value:function(){this.fields={},this.errorMessages={}}},{key:"messageWhenPresent",value:function(e){var t=1<arguments.length&&void 0!==arguments[1]?arguments[1]:{};if(!this.helpers.isBlank(e)&&this.messagesShown)return this.helpers.element(e,t)}},{key:"messageAlways",value:function(e,t){var r=2<arguments.length&&void 0!==arguments[2]?arguments[2]:{};if(console.warn("The messageAlways() method is deprecated in SimpleReactValidator. Please see the documentation and switch to the messageWhenPresent() method."),t&&this.messagesShown)return this.helpers.element(t,r)}},{key:"message",value:function(e,t,r){var s=3<arguments.length&&void 0!==arguments[3]?arguments[3]:{};this.errorMessages[e]=null,this.fields[e]=!0,Array.isArray(r)||(r=r.split("|"));var n=s.validators?b({},this.rules,s.validators):this.rules,a=!0,i=!1,u=void 0;try{for(var l,o=r[Symbol.iterator]();!(a=(l=o.next()).done);a=!0){var c=l.value,m=g(this.helpers.normalizeValues(t,c),3),h=m[0],f=m[1],p=m[2];if(!this.helpers.passes(f,h,p,n)){this.fields[e]=!1;var d=this.helpers.message(f,e,s,n);if(0<p.length&&n[f].hasOwnProperty("messageReplace")&&(d=n[f].messageReplace(d,p)),this.errorMessages[e]=d,this.messagesShown||this.visibleFields.includes(e))return this.helpers.element(d,s)}}}catch(e){i=!0,u=e}finally{try{a||null==o.return||o.return()}finally{if(i)throw u}}}}]),s}();return i(t,"version","1.2.0"),i(t,"locales",{en:{}}),t});
+
+/***/ }),
+
 /***/ "./node_modules/webpack/buildin/global.js":
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
@@ -83287,12 +83302,9 @@ function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var appState = JSON.parse(window.localStorage.getItem('appState'));
-
-      if (appState.isLoggedIn) {
-        this.setState({
-          userData: appState.userData
-        });
-      }
+      this.setState({
+        userData: appState.isLoggedIn ? appState.userData : []
+      });
     }
   }, {
     key: "onFormSubmit",
@@ -83386,7 +83398,9 @@ function (_Component) {
         onSubmit: this.onFormSubmit,
         proceedBooking: this.state.proceedBooking,
         formData: this.state.formData
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_booking_BookingForm__WEBPACK_IMPORTED_MODULE_4__["BookingForm"], null)))), !this.state.proceedBooking && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_booking_BookingForm__WEBPACK_IMPORTED_MODULE_4__["BookingForm"], {
+        userData: this.state.userData
+      })))), !this.state.proceedBooking && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-8 col-lg-offset-2 booking-availability",
@@ -83758,7 +83772,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BookingForm", function() { return BookingForm; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var simple_react_validator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! simple-react-validator */ "./node_modules/simple-react-validator/dist/simple-react-validator.min.js");
+/* harmony import */ var simple_react_validator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(simple_react_validator__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -83768,13 +83786,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 var BookingForm =
@@ -83789,16 +83808,97 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BookingForm).call(this, props));
     _this.state = {
-      token: document.head.querySelector('meta[name="csrf-token"]').content
+      token: document.head.querySelector('meta[name="csrf-token"]').content,
+      email: _this.props.userData ? _this.props.userData.email : '',
+      title: _this.props.userData ? _this.props.userData.title : '',
+      first_name: _this.props.userData ? _this.props.userData.first_name : '',
+      last_name: _this.props.userData ? _this.props.userData.last_name : '',
+      company: _this.props.userData ? _this.props.userData.company : '',
+      address: _this.props.userData ? _this.props.userData.address : '',
+      city: _this.props.userData ? _this.props.userData.city : '',
+      postcode: _this.props.userData ? _this.props.userData.postcode : '',
+      region: _this.props.userData ? _this.props.userData.region : '',
+      country: _this.props.userData ? _this.props.userData.country : '',
+      phone: _this.props.userData ? _this.props.userData.phone : '',
+      notes: ''
     };
+    _this.validator = new simple_react_validator__WEBPACK_IMPORTED_MODULE_1___default.a();
+    _this.handleUserInput = _this.handleUserInput.bind(_assertThisInitialized(_this));
+    _this.bookingFormSubmit = _this.bookingFormSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(BookingForm, [{
+    key: "handleUserInput",
+    value: function handleUserInput(e) {
+      var name = e.target.name;
+      var value = e.target.value;
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: "bookingFormSubmit",
+    value: function bookingFormSubmit(e) {
+      e.preventDefault();
+
+      if (this.validator.allValid()) {
+        var propertyInputs = document.getElementsByName('propertyId[]');
+        var propertyIds = [];
+
+        for (var i = 0; i < propertyInputs.length; i++) {
+          propertyIds.push(propertyInputs[i].value);
+        }
+
+        var data = {
+          _method: 'PATCH',
+          _token: this.state.token,
+          email: this.state.email,
+          title: this.state.title,
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          company: this.state.company,
+          address: this.state.address,
+          city: this.state.city,
+          postcode: this.state.postcode,
+          region: this.state.region,
+          country: this.state.country,
+          phone: this.state.phone,
+          property_ids: propertyIds,
+          start_date: document.getElementById('checkin_input').value,
+          end_date: document.getElementById('checkout_input').value,
+          adults: document.getElementById('adults').value,
+          children: document.getElementById('children').value,
+          infants: document.getElementById('infants').value,
+          notes: this.state.notes,
+          holiday_type: document.getElementById('holiday_type').value
+        };
+        fetch('/booking/save', {
+          method: 'PATCH',
+          body: JSON.stringify(data),
+          headers: {
+            'X-CSRF-TOKEN': this.state.token
+          }
+        }).then(function (response) {
+          return response.json();
+        }).then(function (data) {
+          localStorage["appState"] = JSON.stringify({
+            isLoggedIn: true,
+            userData: data.userData
+          });
+          window.location.href = '/profile/' + data.userData.id + '/bookings/' + data.bookingData.id;
+        });
+      } else {
+        this.validator.showMessages(); // rerender to show messages for the first time
+        // you can use the autoForceUpdate option to do this automatically`
+
+        this.forceUpdate();
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        method: "post"
+        method: "post",
+        onSubmit: this.bookingFormSubmit
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         name: "_token",
@@ -83828,10 +83928,10 @@ function (_Component) {
         type: "email",
         className: "form-control",
         name: "email",
-        id: "email"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "text-danger"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "email",
+        onChange: this.handleUserInput,
+        value: this.state.email
+      }))), this.validator.message('email', this.state.email, 'required|email')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
@@ -83846,20 +83946,22 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         name: "title",
         id: "title",
-        className: "form-control"
+        className: "form-control",
+        onChange: this.handleUserInput,
+        value: this.state.title
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Mr"
-      }, " Mr"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      }, " Mr "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Mrs"
-      }, " Mrs"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      }, " Mrs "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Miss"
-      }, " Miss"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      }, " Miss "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Ms"
-      }, " Ms"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      }, " Ms "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Dr"
-      }, " Dr"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      }, " Dr "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "other"
-      }, " Other"))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, " Other "))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-6"
@@ -83875,10 +83977,10 @@ function (_Component) {
         type: "text",
         className: "form-control",
         name: "first_name",
-        id: "first_name"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "text-danger"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "first_name",
+        onChange: this.handleUserInput,
+        value: this.state.first_name
+      }))), this.validator.message('first_name', this.state.first_name, 'required')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
@@ -83892,10 +83994,10 @@ function (_Component) {
         type: "text",
         className: "form-control",
         name: "last_name",
-        id: "last_name"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "text-danger"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", null))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "last_name",
+        onChange: this.handleUserInput,
+        value: this.state.last_name
+      }))), this.validator.message('last_name', this.state.last_name, 'required')))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "booking-details-block"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
@@ -83913,7 +84015,9 @@ function (_Component) {
         type: "text",
         className: "form-control",
         name: "company",
-        id: "company"
+        id: "company",
+        onChange: this.handleUserInput,
+        value: this.state.company
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -83928,10 +84032,10 @@ function (_Component) {
         type: "text",
         className: "form-control",
         name: "address",
-        id: "address"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "text-danger"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", null)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "address",
+        onChange: this.handleUserInput,
+        value: this.state.address
+      }))), this.validator.message('address', this.state.address, 'required'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-6"
@@ -83947,10 +84051,10 @@ function (_Component) {
         type: "text",
         className: "form-control",
         name: "city",
-        id: "city"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "text-danger"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", null))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "city",
+        onChange: this.handleUserInput,
+        value: this.state.city
+      }))), this.validator.message('city', this.state.city, 'required')), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
@@ -83964,7 +84068,9 @@ function (_Component) {
         type: "text",
         className: "form-control",
         name: "postcode",
-        id: "postcode"
+        id: "postcode",
+        onChange: this.handleUserInput,
+        value: this.state.postcode
       }))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -83981,7 +84087,9 @@ function (_Component) {
         type: "text",
         className: "form-control",
         name: "region",
-        id: "region"
+        id: "region",
+        onChange: this.handleUserInput,
+        value: this.state.region
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -83996,10 +84104,10 @@ function (_Component) {
         type: "text",
         className: "form-control",
         name: "country",
-        id: "country"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "text-danger"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", null)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "country",
+        onChange: this.handleUserInput,
+        value: this.state.country
+      }))), this.validator.message('country', this.state.country, 'required'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-6"
@@ -84015,10 +84123,10 @@ function (_Component) {
         type: "text",
         className: "form-control",
         name: "phone",
-        id: "phone"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-        className: "text-danger"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", null)))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "phone",
+        onChange: this.handleUserInput,
+        value: this.state.phone
+      }))), this.validator.message('phone', this.state.phone, 'required'))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-12"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
@@ -84027,7 +84135,9 @@ function (_Component) {
       }, "Additional information or special requirements:"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
         name: "notes",
         id: "notes",
-        rows: "10"
+        rows: "10",
+        value: this.state.notes,
+        onChange: this.handleUserInput
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
         name: "user_id"
@@ -84127,12 +84237,12 @@ function (_Component) {
         className: "place-booking-properties"
       }, this.state.properties.map(function (property, i) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-          "data-property": property.id,
+          "data-property": property.property_id,
           key: i
         }, property.name, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "hidden",
           name: "propertyId[]",
-          value: property.id
+          value: property.property_id
         }));
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "pull-right place-booking-properties",

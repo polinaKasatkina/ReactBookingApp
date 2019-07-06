@@ -43,9 +43,9 @@ export class BookingItem extends Component {
                 <ul className="place-booking-properties">
                     {this.state.properties.map((property, i) => {
                         return (
-                            <li data-property={property.id} key={i}>
+                            <li data-property={property.property_id} key={i}>
                                 {property.name}
-                                <input type="hidden" name="propertyId[]" value={property.id} />
+                                <input type="hidden" name="propertyId[]" value={property.property_id} />
                             </li>
                         );
                     })}

@@ -484,13 +484,25 @@ input#checkout_input::after {
 }
 
 .nav-tabs {
+    /*border-bottom: none;*/
     border-bottom: none;
+    margin-top: 14px;
+    margin-left: -15px;
 }
 .nav-tabs>li>a {
     border-radius: 0;
     color: #4A4A4A;
 }
 .nav-tabs>li.active>a {
+    border-top: 3px solid #888069;
+    font-weight: bold;
+}
+.nav-tabs a {
+    color: #000;
+    padding: 10px 15px;
+}
+.nav-tabs a.active {
+    background: #fff;
     border-top: 3px solid #888069;
     font-weight: bold;
 }
@@ -627,7 +639,15 @@ td.day.disabled {
 .alert-danger.no-properties {
    margin-top: -30px;
 }
-
+.tab-content>.active {
+    opacity: 1;
+}
+.srv-validation-message {
+    color: red;
+}
+form > .alert {
+    margin-top: 25px;
+}
 @media ( max-width: 585px ) {
     .booking-availability {
         margin-top: 0 !important;

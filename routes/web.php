@@ -31,24 +31,27 @@ Route::get('/booking/place', function() {
     return view('bookings.place');
 });
 
+Route::patch('/booking/save', 'BookingController@save');
+Route::post('/booking/pay', 'BookingController@payDeposit');
+
 
 Route::group([
     'prefix' => 'profile',
     'middleware' => 'auth',
 ], function () {
 
-    Route::get('{profile}/edit/password', [
-        'as' => 'profile.edit.password',
-        'uses' => 'ProfileController@showPasswordForm'
-    ]);
-    Route::get('{profile}/edit/notice', [
-        'as' => 'profile.edit.notice',
-        'uses' => 'ProfileController@showNoticeForm'
-    ]);
-    Route::get('{profile}/edit/account', [
-        'as' => 'profile.edit.account',
-        'uses' => 'ProfileController@showAccountForm'
-    ]);
+//    Route::get('{profile}/edit/password', [
+//        'as' => 'profile.edit.password',
+//        'uses' => 'ProfileController@showPasswordForm'
+//    ]);
+//    Route::get('{profile}/edit/notice', [
+//        'as' => 'profile.edit.notice',
+//        'uses' => 'ProfileController@showNoticeForm'
+//    ]);
+//    Route::get('{profile}/edit/account', [
+//        'as' => 'profile.edit.account',
+//        'uses' => 'ProfileController@showAccountForm'
+//    ]);
     Route::patch('{profile}/edit/password', 'ProfileController@updatePassword');
     Route::patch('{profile}/edit/notice', 'ProfileController@updateNotifications');
     Route::patch('{profile}/edit/account', 'ProfileController@softDelete');

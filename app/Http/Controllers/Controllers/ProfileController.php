@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\EditProfileRequest;
 use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
@@ -67,12 +65,12 @@ class ProfileController extends Controller
      * @param $profile
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function update(EditProfileRequest $request, User $profile)
+    public function update(User $profile, Request $request)
     {
 
-        $profile->fill($request->all())->save();
+        $profile->update($request->all());
 
-        return back()->with('notice', 'Information was successfully updated!');
+        return response()->json($profile, 200);
     }
 
     /**
@@ -110,24 +108,18 @@ class ProfileController extends Controller
     public function updatePassword(Request $request, User $profile)
     {
 
-        $this->validate($request, [
-            'current_pass' => 'required',
-            'new_pass' => 'required|min:6',
-            'confirm_pass' => 'required',
-        ]);
-
         if (!Hash::check($request->current_pass, $profile->getAuthPassword()))
-            return back()->with('error', 'Current password doesn\'t match!');
+            return response()->json(['status' => 'error', 'message' => 'Current password doesn\'t match!'], 200); //back()->with('error', 'Current password doesn\'t match!');
 
 
         if ($request->new_pass != $request->confirm_pass)
-            return back()->with('error_pass', 'Passwords doesn\'t match!');
+            return response()->json(['status' => 'error', 'message' => 'Passwords doesn\'t match!'], 200); //back()->with('error_pass', 'Passwords doesn\'t match!');
 
         $profile->update([
             'password' => bcrypt($request->new_pass)
         ]);
 
-        return back()->with('notice', 'Password successfully updated');
+        return response()->json(['status' => 'success', 'message' => 'Password successfully updated'], 200); //back()->with('notice', 'Password successfully updated');
     }
 
     /**
@@ -150,10 +142,10 @@ class ProfileController extends Controller
             // TODO delete customer details in Stripe
 //            $customer = $stripe->customers()->delete('cus_4EBumIjyaKooft');
 
-            return redirect()->to('login');
+            return response()->json(['status' => 'success', 'message' => ''], 200); //redirect()->to('login');
         }
 
         Log::error('[' . date('Y-m-d H:i:s') . '] ProfileController:softDelete:: Error occurred. User was not deleted.');
-        return back()->with('notice', 'Error occurred. User was not deleted.');
+        return response()->json(['status' => 'error', 'message' => 'Error occurred. User was not deleted.'], 200); //back()->with('notice', 'Error occurred. User was not deleted.');
     }
 }

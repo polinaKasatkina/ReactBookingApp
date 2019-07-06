@@ -74,38 +74,30 @@ class BookingController extends Controller
     public function save(Request $request, User $user)
     {
 
-        $request->validate([
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'email' => 'required|email',
-            'title' => 'required',
-            'address' => 'required',
-            'city' => 'required',
-            'country' => 'required',
-            'phone' => 'required'
-        ]);
 
+        // TODO return email validation
+//        if (!Auth::check()) {
+//            $request->validate([
+//                'email' => 'unique:users',
+//            ]);
+//        }
 
-        if (!Auth::check()) {
-            $request->validate([
-                'email' => 'unique:users',
-            ]);
-        }
+        $data = json_decode($request->getContent(), true);
 
         if (Auth::check()) { // update user info
 
             $user = Auth::user();
             $user->update([
-                'first_name' => $request->first_name,
-                'email' => $request->email,
-                'title' => $request->title,
-                'last_name' => $request->last_name,
-                'address' => $request->address,
-                'city' => $request->city,
-                'region' => $request->region,
-                'country' => $request->country,
-                'postcode' => $request->postcode,
-                'phone' => $request->phone
+                'first_name' => $data['first_name'],
+                'email' => $data['email'],
+                'title' => $data['title'],
+                'last_name' => $data['last_name'],
+                'address' => $data['address'],
+                'city' => $data['city'],
+                'region' => $data['region'],
+                'country' => $data['country'],
+                'postcode' => $data['postcode'],
+                'phone' => $data['phone']
             ]);
 
             $user_id = Auth::user()->id;
@@ -113,55 +105,55 @@ class BookingController extends Controller
         } else { // create new user
 
             $user = User::create([
-                'first_name' => request('first_name'),
-                'last_name' => request('last_name'),
-                'email' => request('email'),
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'email' => $data['email'],
                 'password' => Hash::make(uniqid()),
-                'title' => request('title'),
-                'address' => request('address'),
-                'city' => request('city'),
-                'region' => request('region'),
-                'country' => request('country'),
-                'postcode' => request('postcode'),
-                'phone' => request('phone'),
+                'title' => $data['title'],
+                'address' => $dat['address'],
+                'city' => $data['city'],
+                'region' => $data['region'],
+                'country' => $data['country'],
+                'postcode' => $data['postcode'],
+                'phone' => $data['phone'],
                 'discount' => 0,
-                'company' => request('company')
+                'company' => $data['company']
             ]);
 
             $user_id = $user->id;
 
+            Auth::loginUsingId($user_id, true);
+
         }
 
-        $booking_request = json_decode($_COOKIE['booking_request']);
+//        $booking_request = json_decode($_COOKIE['booking_request']);
 
         $booking = Booking::create([
-            'property_ids' => json_encode($booking_request->productIDs),
-            'start_date' => date('Y-m-d', strtotime(str_replace('/', '.', $booking_request->checkIn))),
-            'end_date' => date('Y-m-d', strtotime(str_replace('/', '.', $booking_request->checkOut))),
-            'adults' => $booking_request->adults,
-            'children' => $booking_request->children,
+            'property_ids' => json_encode($data['property_ids']),
+            'start_date' => date('Y-m-d', strtotime(str_replace('/', '.', $data['start_date']))),
+            'end_date' => date('Y-m-d', strtotime(str_replace('/', '.', $data['end_date']))),
+            'adults' => $data['adults'],
+            'children' => $data['children'],
             'arrival_time' => '16:00',
             'departure_time' => '12:00',
             'options' => '{}',
-            'notes' => request('notes'),
+            'notes' => $data['notes'],
             'user_id' => $user_id,
-            'infants'  => $booking_request->infants,
-            'pet'     => $request->pet ? 1 : 0,
-            'holiday_type' => $booking_request->holiday_type,
+            'infants'  => $data['infants'],
+            'pet'     => 0,
+            'holiday_type' => $data['holiday_type'],
             'status' => 0,
             'payment_days' => 2
         ]);
 
-        unset($_COOKIE['booking_request']);
-        setcookie('booking_request', null, -1, '/');
-
-        Auth::loginUsingId($user_id, true);
+//        unset($_COOKIE['booking_request']);
+//        setcookie('booking_request', null, -1, '/');
 
 
-        Mail::to($user)->send(new ProvisionalBooking($user, $booking));
-        Mail::to('herfords@uppercourt.co.uk')->send(new AdminProvisionalBooking($user, $booking));
+//        Mail::to($user)->send(new ProvisionalBooking($user, $booking));
+//        Mail::to('herfords@uppercourt.co.uk')->send(new AdminProvisionalBooking($user, $booking));
 
-        return redirect()->to('/profile/' . $user_id . '/bookings/' . $booking->id);
+        return response()->json(['userData' => Auth::user(), 'bookingData' => $booking]); //redirect()->to('/profile/' . $user_id . '/bookings/' . $booking->id);
 
     }
 

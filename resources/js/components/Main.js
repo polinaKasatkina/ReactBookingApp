@@ -35,13 +35,10 @@ export default class Main extends Component {
 
         let appState = JSON.parse(window.localStorage.getItem('appState'));
 
-        if (appState.isLoggedIn) {
+        this.setState({
+            userData: appState.isLoggedIn ? appState.userData : []
+        });
 
-            this.setState({
-                userData: appState.userData
-            });
-
-        }
     }
 
     onFormSubmit(e) {
@@ -134,7 +131,7 @@ export default class Main extends Component {
 
                                 <BookingItem properties={this.state.chosenCottages} />
                                 <Form onSubmit={this.onFormSubmit} proceedBooking={this.state.proceedBooking}  formData={this.state.formData} />
-                                <BookingForm />
+                                <BookingForm userData={this.state.userData}  />
                              </div>
                         </div>
                     </div>
