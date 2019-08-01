@@ -56,8 +56,17 @@ Route::group([
     Route::patch('{profile}/edit/notice', 'ProfileController@updateNotifications');
     Route::patch('{profile}/edit/account', 'ProfileController@softDelete');
 
-    Route::get('{profile}/bookings', 'BookingController@bookingsList');
-    Route::get('{profile}/bookings/{booking}', 'BookingController@info');
+    Route::get('{profile}/bookings', function () {
+        return view('bookings.list');
+    });
+
+    Route::get('{profile}/get_bookings', 'BookingController@bookingsList');
+
+    Route::get('{profile}/bookings/{booking}', function() {
+        return view('bookings.booking');
+    });
+
+    Route::get('{profile}/bookings/{booking}/get_booking', 'BookingController@info');
 
     Route::get('{profile}/bookings/{booking}/invoice', 'BookingController@invoice');
 
@@ -69,7 +78,7 @@ Route::resource('profile', 'ProfileController', ['except' => ['create']])->middl
 Route::group([
     'prefix' => 'admin',
     'namespace' => 'Admin',
-   // 'middleware' => 'is_admin',
+    'middleware' => 'is_admin',
 ], function () {
     Route::get('/', 'HomeController@index');
     Route::resource('bookings', 'BookingsController', ['except' => ['create']]);

@@ -16,5 +16,7 @@ mix.react('resources/js/app.js', 'public/js')
 
 mix.react('resources/js/login.js', 'public/js')
    .react('resources/js/register.js', 'public/js')
-    .react('resources/js/profile.js', 'public/js');
+    .react('resources/js/profile.js', 'public/js')
+   .react('resources/js/bookings.js', 'public/js')
+    .react('resources/js/booking.js', 'public/js');
 

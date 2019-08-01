@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Property;
 use DateTime;
-use App\Mail\ConfirmedBooking;
-use App\Mail\ProvisionalBooking;
-use App\Mail\AdminProvisionalBooking;
+//use App\Mail\ConfirmedBooking;
+//use App\Mail\ProvisionalBooking;
+//use App\Mail\AdminProvisionalBooking;
 use App\Models\BookingPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\PropertyPrice;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade as PDF;
+use DateInterval;
 
 class BookingController extends Controller
 {
@@ -160,11 +162,68 @@ class BookingController extends Controller
     public function bookingsList(User $profile)
     {
 
+        $result = [];
+
         $bookings = Booking::where('user_id', $profile->id)
             ->orderBy('id', 'desc')
             ->get();
 
-        return view('bookings.list', compact('bookings', 'profile'));
+
+        foreach ($bookings as $booking) {
+
+
+            $properties = [];
+
+            foreach(json_decode($booking->property_ids) as $property_id) {
+
+                $propertyObj = Property::where('property_id', $property_id)->first();
+
+                $properties[] = $propertyObj;
+            }
+
+            $totalPrice = 0;
+            foreach(json_decode($booking->property_ids) as $property_id) {
+
+                $price = PropertyPrice::where('property_id', '=', $property_id)
+                    ->where('start_date', '<', $booking->start_date)
+                    ->where('end_date', '>', $booking->start_date)
+                    ->first();
+
+
+                if ($price) {
+                    switch ($booking->holiday_type) {
+                        case '3':
+                            $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
+                            break;
+                        case '4':
+                            $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
+                            break;
+                        case '7':
+                            $totalPrice += (float)str_replace(',', '', $price->week_price);
+                            break;
+                        case '14':
+                            $totalPrice += (((float)str_replace(',', '', $price->week_price)) * 2);
+                            break;
+                        default:
+                            $totalPrice += (float)str_replace(',', '', $price->week_price);
+                            break;
+                    }
+
+                }
+            }
+
+
+            $result[] = [
+                'id' => $booking->id,
+                'start_date' => date('d.m.Y', strtotime($booking->start_date)),
+                'end_date'   => date('d.m.Y', strtotime($booking->end_date)),
+                'properties' => $properties,
+                'total_price' => $totalPrice
+            ];
+        }
+
+        return response()->json($result);
+
     }
 
     public function info(User $profile, Booking $booking)
@@ -212,8 +271,28 @@ class BookingController extends Controller
             $card = $customer ? $customer["sources"]['data'][0] : [];
         }
 
+        $properties = [];
 
-        return view('bookings.booking', compact('profile', 'booking', 'totalPrice', 'card'));
+        foreach(json_decode($booking->property_ids) as $property) {
+
+            $properties[] = $propertyObj = Property::where('property_id', $property)->first();
+
+        }
+
+        $bookingPayment = new BookingPayment();
+
+        $createdAt = new DateTime($booking->created_at);
+        $bookingDate = new DateTime($booking->start_date);
+        $nowDate = new DateTime();
+
+        $booking->amount = $bookingDate->diff($nowDate)->days < 56 ? $totalPrice : $totalPrice * 0.3;
+        $booking->amount = number_format($booking->amount, "2");
+
+        $booking->paymentDate = $bookingPayment->getPaymentDate($booking->id);
+        $booking->payTillDate = $createdAt->add(new DateInterval('P' . $booking->payment_days . 'D'))->format('d.m.Y');
+
+        return response()->json(compact('booking', 'totalPrice', 'card', 'properties'));
+
     }
 
 
@@ -293,15 +372,19 @@ class BookingController extends Controller
                 ]);
 
 
-                Mail::to($user)->send(new ConfirmedBooking($user, $booking));
+//                Mail::to($user)->send(new ConfirmedBooking($user, $booking));
 
-                return back()->with('notice', 'Payment was successful!');
+                return response()->json(['status' => 'success', 'message' => 'Payment was successful!']);
+
+//                return back()->with('notice', 'Payment was successful!');
 
             } else {
 
                 Log::info('[' . date('Y-m-d H:i:s') . '] BookingController:payDeposit:: There was some errors in taking payment with Stripe');
 
-                return back()->with('warning', 'There was some errors in taking payment. Please try again later!');
+                return response()->json(['status' => 'erroe', 'message' => 'There was some errors in taking payment. Please try again later!']);
+
+//                return back()->with('warning', 'There was some errors in taking payment. Please try again later!');
             }
 
 

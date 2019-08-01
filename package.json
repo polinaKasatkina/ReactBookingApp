@@ -25,9 +25,11 @@
         "sass-loader": "^7.1.0"
     },
     "dependencies": {
+        "date-diff": "^0.2.1",
         "react-bootstrap": "^1.0.0-beta.9",
         "react-bootstrap-datetimepicker": "0.0.22",
         "react-datetime": "^2.16.3",
+        "react-maskedinput": "^4.0.1",
         "simple-react-validator": "^1.2.0",
         "universal-cookie": "^4.0.0"
     }
