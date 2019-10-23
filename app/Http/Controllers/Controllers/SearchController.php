@@ -67,12 +67,12 @@ class SearchController extends Controller
 
             foreach ($cottage as $id) {
 
-                $returned_content = $this->get_data("https://api.supercontrol.co.uk/xml/property_avail.asp?siteID=24362&propertycode={$id}&startdate={$checkIn}&enddate={$checkOut}&basic_details=1&sleeps={$persons}");
+                $returned_content = $this->get_data("https://api.supercontrol.co.uk/xml/property_avail.asp?siteID=" . env('STRIPE_SECRET') . "&propertycode={$id}&startdate={$checkIn}&enddate={$checkOut}&basic_details=1&sleeps={$persons}");
                 $properties[] = $this->getResults($returned_content, $id);
             }
 
         } else {
-            $returned_content = $this->get_data("https://api.supercontrol.co.uk/xml/property_avail.asp?siteID=24362&propertycode={$cottage}&startdate={$checkIn}&enddate={$checkOut}&basic_details=1&sleeps={$persons}");
+            $returned_content = $this->get_data("https://api.supercontrol.co.uk/xml/property_avail.asp?siteID=" . env('STRIPE_SECRET') . "&propertycode={$cottage}&startdate={$checkIn}&enddate={$checkOut}&basic_details=1&sleeps={$persons}");
 
             $properties[] = $this->getResults($returned_content, $cottage);
         }
@@ -89,7 +89,7 @@ class SearchController extends Controller
                     continue;
                 }
 
-                $propertyDetails = \App\Models\Property::where('property_id', $property_id)->first();
+                $propertyDetails = Property::where('property_id', $property_id)->first();
 
 
                 $sumCapacity += $propertyDetails->details->capacity_adults + $propertyDetails->details->capacity_children;
@@ -171,7 +171,6 @@ class SearchController extends Controller
         return response()->json(compact('propertiesObj'));
 
 
-//        return view('index', compact('propertiesObj', 'properties', 'request'));
     }
 
     private function get_data($url) {
@@ -214,10 +213,6 @@ class SearchController extends Controller
                 }
             }
         }
-
-//        if ($cottage_id == 356882) {
-//            var_dump($statuses['availability']); die;
-//        }
 
 
 
