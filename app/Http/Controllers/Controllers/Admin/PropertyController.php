@@ -115,10 +115,6 @@ class PropertyController extends Controller
                         'enabled' => $property['enabled']
                     ]);
 
-//                $propertyObj->name = $propertyDetails['name'];
-//                $propertyObj->enabled = $property['enabled'];
-//
-//                $propertyObj->save();
 
                 PropertyDetails::where('property_id', $property['property_id'])
                 ->update([

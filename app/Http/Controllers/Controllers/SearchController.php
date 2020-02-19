@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\PriceHelper;
 use App\User;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
@@ -125,31 +126,9 @@ class SearchController extends Controller
 
                 foreach ($items as $property_id => $item) {
 
-                    $itemPrice = '';
-
                     $propertyDetails = Property::where('property_id', $property_id)->first();
 
-                    $checkInDate = str_replace('/', '.', $request->checkin);
-                    $price = PropertyPrice::where('property_id', '=', $property_id)
-                        ->where('start_date', '<', date('Y-m-d', strtotime($checkInDate)))
-                        ->where('end_date', '>', date('Y-m-d', strtotime($checkInDate)))
-                        ->first();
-                    if ($price) {
-                        switch (request('holiday_type')) {
-                            case '3':
-                                $itemPrice = $price->mid_week_price;
-                                break;
-                            case '4':
-                                $itemPrice = $price->mid_week_price;
-                                break;
-                            case '7':
-                                $itemPrice = $price->week_price;
-                                break;
-                            case '14':
-                                $itemPrice = (((float)str_replace(',', '', $price->week_price)) * 2);
-                                break;
-                        }
-                    }
+                    $itemPrice = PriceHelper::getPropertyPrice($property_id, $request);
 
                     $propertiesObj[] = [
                         'id' => $property_id,

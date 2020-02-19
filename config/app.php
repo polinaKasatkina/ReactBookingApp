@@ -179,6 +179,8 @@ return [
 
         Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
 
+        App\Providers\HelperServiceProvider::class,
+
     ],
 
     /*

@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Property;
 use DateTime;
-//use App\Mail\ConfirmedBooking;
-//use App\Mail\ProvisionalBooking;
-//use App\Mail\AdminProvisionalBooking;
 use App\Models\BookingPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +17,7 @@ use App\Models\PropertyPrice;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade as PDF;
 use DateInterval;
+use App\Helpers\PriceHelper;
 
 class BookingController extends Controller
 {
@@ -35,39 +33,7 @@ class BookingController extends Controller
     {
 
         $booking_request = isset($_COOKIE['booking_request']) ? json_decode($_COOKIE['booking_request']) : [];
-        $totalPrice = 0;
-
-
-        foreach ($booking_request->productIDs as $property) {
-
-            $checkInDate = str_replace('/', '.', $booking_request->checkIn);
-
-            $price = PropertyPrice::where('property_id', '=', $property)
-                ->where('start_date', '<', date('Y-m-d', strtotime($checkInDate)))
-                ->where('end_date', '>', date('Y-m-d', strtotime($checkInDate)))
-                ->first();
-
-
-            if ($price) {
-                switch ($booking_request->holiday_type) {
-                    case '3':
-                        $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
-                        break;
-                    case '4':
-                        $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
-                        break;
-                    case '7':
-                        $totalPrice += (float)str_replace(',', '', $price->week_price);
-                        break;
-                    case '14':
-                        $totalPrice += (((float)str_replace(',', '', $price->week_price)) * 2);
-                        break;
-                }
-
-            }
-
-
-        }
+        $totalPrice = $booking_request ? PriceHelper::getTotalPrice($booking_request) : 0;
 
         return view('bookings.place', compact('booking_request', 'totalPrice'));
 
@@ -76,13 +42,6 @@ class BookingController extends Controller
     public function save(Request $request, User $user)
     {
 
-
-        // TODO return email validation
-//        if (!Auth::check()) {
-//            $request->validate([
-//                'email' => 'unique:users',
-//            ]);
-//        }
 
         $data = json_decode($request->getContent(), true);
 
@@ -181,37 +140,7 @@ class BookingController extends Controller
                 $properties[] = $propertyObj;
             }
 
-            $totalPrice = 0;
-            foreach(json_decode($booking->property_ids) as $property_id) {
-
-                $price = PropertyPrice::where('property_id', '=', $property_id)
-                    ->where('start_date', '<', $booking->start_date)
-                    ->where('end_date', '>', $booking->start_date)
-                    ->first();
-
-
-                if ($price) {
-                    switch ($booking->holiday_type) {
-                        case '3':
-                            $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
-                            break;
-                        case '4':
-                            $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
-                            break;
-                        case '7':
-                            $totalPrice += (float)str_replace(',', '', $price->week_price);
-                            break;
-                        case '14':
-                            $totalPrice += (((float)str_replace(',', '', $price->week_price)) * 2);
-                            break;
-                        default:
-                            $totalPrice += (float)str_replace(',', '', $price->week_price);
-                            break;
-                    }
-
-                }
-            }
-
+            $totalPrice = PriceHelper::getTotalPrice($booking->property_ids);
 
             $result[] = [
                 'id' => $booking->id,
@@ -229,39 +158,7 @@ class BookingController extends Controller
     public function info(User $profile, Booking $booking)
     {
 
-        $totalPrice = 0;
-
-        foreach (json_decode($booking->property_ids) as $property) {
-
-            $price = PropertyPrice::where('property_id', '=', $property)
-                ->where('start_date', '<', $booking->start_date)
-                ->where('end_date', '>', $booking->start_date)
-                ->first();
-
-
-            if ($price) {
-                switch ($booking->holiday_type) {
-                    case '3':
-                        $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
-                        break;
-                    case '4':
-                        $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
-                        break;
-                    case '7':
-                        $totalPrice += (float)str_replace(',', '', $price->week_price);
-                        break;
-                    case '14':
-                        $totalPrice += (((float)str_replace(',', '', $price->week_price)) * 2);
-                        break;
-                    default:
-                        $totalPrice += (float)str_replace(',', '', $price->week_price);
-                        break;
-                }
-
-            }
-
-
-        }
+        $totalPrice = PriceHelper::getTotalPrice($booking, false);
 
         $card = [];
         if ($profile->stripe_id) {
@@ -402,39 +299,8 @@ class BookingController extends Controller
     public function invoice(User $profile, Booking $booking)
     {
 
-        $totalPrice = 0;
+        $totalPrice = PriceHelper::getTotalPrice($booking, false);
 
-        foreach (json_decode($booking->property_ids) as $property) {
-
-            $price = PropertyPrice::where('property_id', '=', $property)
-                ->where('start_date', '<', $booking->start_date)
-                ->where('end_date', '>', $booking->start_date)
-                ->first();
-
-
-            if ($price) {
-                switch ($booking->holiday_type) {
-                    case '3':
-                        $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
-                        break;
-                    case '4':
-                        $totalPrice += (float)str_replace(',', '', $price->mid_week_price);
-                        break;
-                    case '7':
-                        $totalPrice += (float)str_replace(',', '', $price->week_price);
-                        break;
-                    case '14':
-                        $totalPrice += (((float)str_replace(',', '', $price->week_price)) * 2);
-                        break;
-                    default:
-                        $totalPrice += (float)str_replace(',', '', $price->week_price);
-                        break;
-                }
-
-            }
-
-
-        }
 
         PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);
 
@@ -443,10 +309,8 @@ class BookingController extends Controller
         return response()->file(storage_path('invoices/') . 'invoice_' . $booking->id . '.pdf',
             [
                 'Content-Type' => 'application/pdf',
-//                'Content-Disposition' => 'attachment; filename="invoice_' . $booking->id . '.pdf"',
             ]
         );
-//        return view('bookings.invoice', compact('profile', 'booking', 'totalPrice'));
     }
 
 
